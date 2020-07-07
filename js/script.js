@@ -7,7 +7,12 @@ $(document).ready(function() {
   // Evento al click dell Bottone Aggiungu
   $('#add-item').click(getNewItem);
 
-
+  // Evento al click del tasto invio
+  $(document).keypress(function(event) {
+    if(event.which === 13) {
+      getNewItem();
+    }
+  });
 
 });
 
