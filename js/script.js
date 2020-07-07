@@ -4,12 +4,19 @@ $(document).ready(function() {
 
   getAllItemsSaved();
 
+  // Evento al click dell Bottone Aggiungu
+  $('#add-item').click(getNewItem);
+
+
+
 });
 
 // FUNCTIONS
 // Chiamata Ajax GET dell'API per stampare le attività salvate
 // nel server
 function getAllItemsSaved() {
+  $('#todo-list').html('');
+
   $.ajax(
     {
       url: 'http://157.230.17.132:3017/todos/',
@@ -41,3 +48,31 @@ function getAllItemsSaved() {
     }
   );
 };
+
+
+function getNewItem() {
+  var newItem = $('#write-item').val();
+
+  if(newItem.length > 0) {
+    $.ajax(
+      {
+        url: 'http://157.230.17.132:3017/todos/',
+        method: 'POST',
+        data: {
+          text: newItem,
+        },
+        success: function() {
+          getAllItemsSaved();
+        },
+        error: function() {
+          alert("Non sono riuscito ad aggiungere l'attività da te inserita");
+        }
+      }
+    );
+  } else {
+    alert('Inserisci una attività');
+  }
+
+
+  $('#write-item').val('');
+}
