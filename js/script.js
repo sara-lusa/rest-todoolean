@@ -14,6 +14,8 @@ $(document).ready(function() {
     }
   });
 
+  // Evento al click del Bottone Elimina
+  $(document).on('click', '.delete', deleteItem);
 });
 
 // FUNCTIONS
@@ -54,7 +56,8 @@ function getAllItemsSaved() {
   );
 };
 
-
+// Chiamata Ajax POST dell'API per aggiungere delle attività scritte
+// dall'utente nell'input
 function getNewItem() {
   var newItem = $('#write-item').val();
 
@@ -80,4 +83,22 @@ function getNewItem() {
 
 
   $('#write-item').val('');
+}
+
+// Chiamata Ajax DELETE dell'API per eliminare da esso e dall'HTML
+function deleteItem() {
+  var id = $(this).parent().attr('data-id');
+
+  $.ajax(
+    {
+      url: 'http://157.230.17.132:3017/todos/' + id,
+      method: 'DELETE',
+      success: function() {
+        getAllItemsSaved();
+      },
+      error: function() {
+        alert("Attenzione, non sono riuscito a eliminare l'elemento");
+      }
+    }
+  );
 }
